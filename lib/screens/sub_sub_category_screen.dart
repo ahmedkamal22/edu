@@ -102,9 +102,9 @@ class _SubSubCategoryScreenState extends State<SubSubCategoryScreen> {
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: const Text(
-                          'Go to course',
-                          style: TextStyle(
+                        child: Text(
+                          'Showing ${categoryData.subSubItems.length} Sub-Sub-Categories',
+                          style: const TextStyle(
                             fontWeight: FontWeight.w300,
                             fontSize: 17,
                           ),
