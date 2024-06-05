@@ -198,11 +198,11 @@ class Courses with ChangeNotifier {
 
   Future<void> fetchCourseDetailById(int courseId) async {
     var authToken = await SharedPreferenceHelper().getAuthToken();
-    var url = '$BASE_URL/api/course_details_by_id?course_id=$courseId';
+    var url = '$AMIN_BASE_URL/api/course_details_by_id?course_id=$courseId';
 
     if (authToken != null) {
       url =
-          '$BASE_URL/api/course_details_by_id?auth_token=$authToken&course_id=$courseId';
+          '$AMIN_BASE_URL/api/course_details_by_id?auth_token=$authToken&course_id=$courseId';
     }
 
     try {
@@ -259,6 +259,23 @@ class Courses with ChangeNotifier {
     }
   }
 
+  Future<void> getLessonEnrolled(int lessonId) async {
+    final authToken = await SharedPreferenceHelper().getAuthToken();
+    var url =
+        '$AMIN_BASE_URL/api/enroll_free_course?auth_token=$authToken&lesson_id=$lessonId';
+    try {
+      final response = await http.get(Uri.parse(url));
+      final responseData = json.decode(response.body);
+      if (responseData['message'] == 'success') {
+        _courseDetailsitems.first.isPurchased = true;
+
+        notifyListeners();
+      }
+    } catch (error) {
+      rethrow;
+    }
+  }
+
   List<Section> buildCourseSections(List extractedSections) {
     final List<Section> loadedSections = [];
 
@@ -296,6 +313,14 @@ class Courses with ChangeNotifier {
         videoUrlWeb: lessonData['video_url_web'],
         videoTypeWeb: lessonData['video_type_web'],
         vimeoVideoId: lessonData['vimeo_video_id'],
+        lessonPrice: lessonData['price'],
+        lessonDiscountPrice: lessonData['discounted_price'],
+        lessonExpiryData: lessonData['expiry_period'],
+        isLessonPurchased: (lessonData['is_lesson_purchased'] is int)
+            ? lessonData['is_lesson_purchased'] == 1
+                ? true
+                : false
+            : lessonData['is_lesson_purchased'],
       ));
     }
     // print(loadedLessons.first.title);

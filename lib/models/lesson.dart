@@ -15,21 +15,28 @@ class Lesson {
   String? videoUrlWeb;
   String? videoTypeWeb;
   String? vimeoVideoId;
+  String? lessonPrice;
+  String? lessonDiscountPrice;
+  String? lessonExpiryData;
+  bool? isLessonPurchased;
 
-  Lesson({
-    @required this.id,
-    @required this.title,
-    @required this.duration,
-    @required this.lessonType,
-    this.isFree,
-    this.videoUrl,
-    this.summary,
-    this.attachmentType,
-    this.attachment,
-    this.attachmentUrl,
-    this.isCompleted,
-    this.videoUrlWeb,
-    this.videoTypeWeb,
-    this.vimeoVideoId,
-  });
+  Lesson(
+      {@required this.id,
+      @required this.title,
+      @required this.duration,
+      @required this.lessonType,
+      this.isFree,
+      this.videoUrl,
+      this.summary,
+      this.attachmentType,
+      this.attachment,
+      this.attachmentUrl,
+      this.isCompleted,
+      this.videoUrlWeb,
+      this.videoTypeWeb,
+      this.vimeoVideoId,
+      this.lessonPrice,
+      this.lessonDiscountPrice,
+      this.lessonExpiryData,
+      this.isLessonPurchased});
 }
