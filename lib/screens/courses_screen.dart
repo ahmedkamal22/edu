@@ -57,7 +57,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
         });
       } else if (pageDataType == CoursesPageData.All) {
         Provider.of<Courses>(context)
-            .filterCourses('all', 'all', 'all', 'all', 'all')
+            .filterCourses('all', 'all', 'all', 'all', 'all', 'all')
             .then((_) {
           setState(() {
             _isLoading = false;

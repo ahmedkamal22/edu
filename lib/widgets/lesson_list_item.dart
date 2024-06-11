@@ -16,8 +16,13 @@ import 'from_youtube.dart';
 class LessonListItem extends StatefulWidget {
   final Lesson? lesson;
   final int courseId;
+  final bool isCoursePurchased;
 
-  const LessonListItem({Key? key, @required this.lesson, required this.courseId})
+  const LessonListItem(
+      {Key? key,
+      @required this.lesson,
+      required this.courseId,
+      required this.isCoursePurchased})
       : super(key: key);
 
   @override
@@ -136,54 +141,65 @@ class _LessonListItemState extends State<LessonListItem> {
                     padding: const EdgeInsetsDirectional.only(start: 20),
                     child: Text(
                         widget.lesson!.isFree == '0'
-                            ? "${widget.lesson!.lessonPrice} \$"
+                            ? "${widget.lesson!.lessonDiscountPrice == '0' ? widget.lesson!.lessonPrice : widget.lesson!.lessonDiscountPrice} \$"
                             : "Free",
                         style:
                             const TextStyle(fontSize: 14, color: Colors.blue)),
                   ),
+                  if (widget.lesson!.lessonDiscountPrice != null &&
+                      widget.lesson!.lessonDiscountPrice != "0")
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(start: 10),
+                      child: Text("${widget.lesson!.lessonPrice} \$",
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.blue,
+                              decoration: TextDecoration.lineThrough)),
+                    ),
                   const Spacer(),
-                  MaterialButton(
-                    onPressed: () async {
-                      _authToken =
-                          await SharedPreferenceHelper().getAuthToken();
-                      if (!widget.lesson!.isLessonPurchased!) {
-                        if (_authToken != null) {
-                          if (widget.lesson!.isFree == '1') {
-                            Provider.of<Courses>(context, listen: false)
-                                .getLessonEnrolled(widget.lesson!.id!)
-                                .then((_) => CommonFunctions.showSuccessToast(
-                                    'Lesson Enrolled Successfully'));
+                  if (!widget.isCoursePurchased)
+                    MaterialButton(
+                      onPressed: () async {
+                        _authToken =
+                            await SharedPreferenceHelper().getAuthToken();
+                        if (!widget.lesson!.isLessonPurchased!) {
+                          if (_authToken != null) {
+                            if (widget.lesson!.isFree == '1') {
+                              Provider.of<Courses>(context, listen: false)
+                                  .getLessonEnrolled(widget.lesson!.id!)
+                                  .then((_) => CommonFunctions.showSuccessToast(
+                                      'Lesson Enrolled Successfully'));
+                            } else {
+                              final url =
+                                  '$AMIN_BASE_URL/api/web_redirect_to_buy_lesson/$_authToken/${widget.lesson!.id}/academybycreativeitem';
+                              _launchURL(url);
+                            }
                           } else {
-                            final url =
-                                '$AMIN_BASE_URL/api/web_redirect_to_buy_lesson/$_authToken/${widget.lesson!.id}/academybycreativeitem';
-                            _launchURL(url);
+                            CommonFunctions.showSuccessToast(
+                                'Please login first');
                           }
-                        } else {
-                          CommonFunctions.showSuccessToast(
-                              'Please login first');
                         }
-                      }
-                    },
-                    color: widget.lesson!.isLessonPurchased!
-                        ? kGreenPurchaseColor
-                        : kPrimaryColor,
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    splashColor: Colors.blueAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7.0),
+                      },
+                      color: widget.lesson!.isLessonPurchased!
+                          ? kGreenPurchaseColor
+                          : kPrimaryColor,
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      splashColor: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                      child: Text(
+                        widget.lesson!.isLessonPurchased!
+                            ? 'Lesson Purchased'
+                            : widget.lesson!.isFree == '1'
+                            ? 'Get Enroll'
+                            : 'Buy This Lesson',
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 16),
+                      ),
                     ),
-                    child: Text(
-                      widget.lesson!.isLessonPurchased!
-                          ? 'Lesson Purchased'
-                          : widget.lesson!.isFree == '1'
-                              ? 'Get Enroll'
-                              : 'Buy This Lesson',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w400, fontSize: 16),
-                    ),
-                  ),
                 ],
               ),
             ],

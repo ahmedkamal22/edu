@@ -96,6 +96,7 @@ class Courses with ChangeNotifier {
 
   Future<void> filterCourses(
       String selectedCategory,
+      String selectedSubSubCategory,
       String selectedPrice,
       String selectedLevel,
       String selectedLanguage,

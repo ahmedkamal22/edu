@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 class Lesson {
   int? id;
+  int? courseId;
   String? title;
   String? duration;
+  String? durationForMobile;
   String? videoUrl;
   String? lessonType;
   String? isFree;
@@ -13,7 +15,9 @@ class Lesson {
   String? attachmentUrl;
   String? isCompleted;
   String? videoUrlWeb;
+  String? videoUrlMobile;
   String? videoTypeWeb;
+  String? videoTypeMobile;
   String? vimeoVideoId;
   String? lessonPrice;
   String? lessonDiscountPrice;
@@ -26,6 +30,7 @@ class Lesson {
       @required this.duration,
       @required this.lessonType,
       this.isFree,
+      this.courseId,
       this.videoUrl,
       this.summary,
       this.attachmentType,
@@ -38,5 +43,8 @@ class Lesson {
       this.lessonPrice,
       this.lessonDiscountPrice,
       this.lessonExpiryData,
-      this.isLessonPurchased});
+      this.isLessonPurchased,
+      this.durationForMobile,
+      this.videoTypeMobile,
+      this.videoUrlMobile});
 }
