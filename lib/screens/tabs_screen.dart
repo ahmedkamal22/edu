@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:academy_app/constants.dart';
+import 'package:academy_app/screens/my_lessons_screen.dart';
 import 'package:academy_app/widgets/app_bar.dart';
 import 'package:academy_app/widgets/filter_widget.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   List<Widget> _pages = [
     const HomeScreen(),
+    const LoginScreen(),
     const LoginScreen(),
     const LoginScreen(),
     const LoginScreen(),
@@ -73,6 +75,7 @@ class _TabsScreenState extends State<TabsScreen> {
         _pages = [
           const HomeScreen(),
           const MyCoursesScreen(),
+          const MyLessonsScreen(),
           const MyWishlistScreen(),
           const AccountScreen(),
         ];
@@ -104,7 +107,7 @@ class _TabsScreenState extends State<TabsScreen> {
       backgroundColor: kBackgroundColor,
       appBar: const CustomAppBar(),
       body: _pages[_selectedPageIndex],
-      floatingActionButton: _selectedPageIndex != 3
+      floatingActionButton: _selectedPageIndex != 4
           ? FloatingActionButton(
               onPressed: () => _showFilterModal(context),
               backgroundColor: kDarkButtonBg,
@@ -125,6 +128,12 @@ class _TabsScreenState extends State<TabsScreen> {
             icon: Icon(Icons.school_outlined),
             activeIcon: Icon(Icons.school),
             label: 'My Course',
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: kBackgroundColor,
+            icon: Icon(Icons.scanner_outlined),
+            activeIcon: Icon(Icons.scanner),
+            label: 'My Lessons',
           ),
           BottomNavigationBarItem(
             backgroundColor: kBackgroundColor,
