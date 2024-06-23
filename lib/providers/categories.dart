@@ -33,7 +33,7 @@ class Categories with ChangeNotifier {
   }
 
   Future<void> fetchCategories() async {
-    var url = '$BASE_URL/api/categories';
+    var url = '$AMIN_BASE_URL/api/categories';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as List;
@@ -185,7 +185,6 @@ class Categories with ChangeNotifier {
       loadedSubCategories.add(AllSubSubCategories(
         id: int.parse(subSubData['id']),
         title: subSubData['name'],
-        parent: subSubData['parent'],
       ));
     }
     // print(loadedLessons.first.title);

@@ -135,19 +135,18 @@ class _FilterWidgetState extends State<FilterWidget> {
 
     try {
       if (_selectedSubCat != null) {
-        if (_selectedSubSubCat != null) {
-          await Provider.of<Courses>(context, listen: false).filterCourses(
-              _selectedSubCat,
-              _selectedSubSubCat,
-              _selectedPrice,
-              _selectedLevel,
-              _selectedLanguage,
-              _selectedRating);
-        }
+        await Provider.of<Courses>(context, listen: false).filterCourses(
+            _selectedSubCat,
+            _selectedPrice,
+            _selectedLevel,
+            _selectedLanguage,
+            _selectedRating);
+        // if (_selectedSubSubCat != null) {
+        //
+        // }
       } else {
         await Provider.of<Courses>(context, listen: false).filterCourses(
             _selectedCategory,
-            _selectedSubCat,
             _selectedPrice,
             _selectedLevel,
             _selectedLanguage,
@@ -413,9 +412,9 @@ class _FilterWidgetState extends State<FilterWidget> {
                                     return DropdownMenuItem(
                                       value:
                                           cd.id == 0 ? 'all' : cd.id.toString(),
-                                      child: Text(
-                                        cd.title.toString(),
-                                        style: const TextStyle(
+                                      child: const Text(
+                                        "test",
+                                        style: TextStyle(
                                           color: kSecondaryColor,
                                           fontSize: 15,
                                         ),

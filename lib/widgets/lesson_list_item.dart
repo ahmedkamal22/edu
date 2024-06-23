@@ -135,29 +135,29 @@ class _LessonListItemState extends State<LessonListItem> {
                     ),
                 ],
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 20),
-                    child: Text(
-                        widget.lesson!.isFree == '0'
-                            ? "${widget.lesson!.lessonDiscountPrice == '0' ? widget.lesson!.lessonPrice : widget.lesson!.lessonDiscountPrice} \$"
-                            : "Free",
-                        style:
-                            const TextStyle(fontSize: 14, color: Colors.blue)),
-                  ),
-                  if (widget.lesson!.lessonDiscountPrice != null &&
-                      widget.lesson!.lessonDiscountPrice != "0")
+              if (!widget.isCoursePurchased)
+                Row(
+                  children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 10),
-                      child: Text("${widget.lesson!.lessonPrice} \$",
+                      padding: const EdgeInsetsDirectional.only(start: 20),
+                      child: Text(
+                          widget.lesson!.isFree == '0'
+                              ? "${widget.lesson!.lessonDiscountPrice == '0' ? widget.lesson!.lessonPrice : widget.lesson!.lessonDiscountPrice} \$"
+                              : "Free",
                           style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.blue,
-                              decoration: TextDecoration.lineThrough)),
+                              fontSize: 14, color: Colors.blue)),
                     ),
-                  const Spacer(),
-                  if (!widget.isCoursePurchased)
+                    if (widget.lesson!.lessonDiscountPrice != null &&
+                        widget.lesson!.lessonDiscountPrice != "0")
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 10),
+                        child: Text("${widget.lesson!.lessonPrice} \$",
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.blue,
+                                decoration: TextDecoration.lineThrough)),
+                      ),
+                    const Spacer(),
                     MaterialButton(
                       onPressed: () async {
                         _authToken =
@@ -194,14 +194,14 @@ class _LessonListItemState extends State<LessonListItem> {
                         widget.lesson!.isLessonPurchased!
                             ? 'Lesson Purchased'
                             : widget.lesson!.isFree == '1'
-                            ? 'Get Enroll'
-                            : 'Buy This Lesson',
+                                ? 'Get Enroll'
+                                : 'Buy This Lesson',
                         style: const TextStyle(
                             fontWeight: FontWeight.w400, fontSize: 16),
                       ),
                     ),
-                ],
-              ),
+                  ],
+                ),
             ],
           ),
         ),
