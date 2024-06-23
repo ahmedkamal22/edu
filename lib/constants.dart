@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 const BASE_URL = 'https://edu.drahmedeltoukhi.com';
 
-const AMIN_BASE_URL =
-    'https://lms.ahmedamen.com'; // Example: const BASE_URL = 'http://192.168.0.119/academy-demo';
-
 // list of colors that we use in our app
 const kBackgroundColor = Color(0xFFF5F9FA);
 const kPrimaryColor = Color(0xFF754FFE);

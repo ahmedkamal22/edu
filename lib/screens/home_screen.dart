@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> sliderImages() async {
-    var url = '$AMIN_BASE_URL/api/sliders';
+    var url = '$BASE_URL/api/sliders';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

@@ -82,7 +82,7 @@ class MyCourses with ChangeNotifier {
 
   Future<void> fetchMyLessons() async {
     final authToken = await SharedPreferenceHelper().getAuthToken();
-    var url = '$AMIN_BASE_URL/api/my_lessons?auth_token=$authToken';
+    var url = '$BASE_URL/api/my_lessons?auth_token=$authToken';
     try {
       final response = await http.get(Uri.parse(url));
       print(response.body);
