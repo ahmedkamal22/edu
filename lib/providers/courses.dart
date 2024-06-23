@@ -198,11 +198,11 @@ class Courses with ChangeNotifier {
 
   Future<void> fetchCourseDetailById(int courseId) async {
     var authToken = await SharedPreferenceHelper().getAuthToken();
-    var url = '$AMIN_BASE_URL/api/course_details_by_id?course_id=$courseId';
+    var url = '$BASE_URL/api/course_details_by_id?course_id=$courseId';
 
     if (authToken != null) {
       url =
-          '$AMIN_BASE_URL/api/course_details_by_id?auth_token=$authToken&course_id=$courseId';
+          '$BASE_URL/api/course_details_by_id?auth_token=$authToken&course_id=$courseId';
     }
 
     try {
@@ -262,7 +262,7 @@ class Courses with ChangeNotifier {
   Future<void> getLessonEnrolled(int lessonId) async {
     final authToken = await SharedPreferenceHelper().getAuthToken();
     var url =
-        '$AMIN_BASE_URL/api/enroll_free_course?auth_token=$authToken&lesson_id=$lessonId';
+        '$BASE_URL/api/enroll_free_course?auth_token=$authToken&lesson_id=$lessonId';
     try {
       final response = await http.get(Uri.parse(url));
       final responseData = json.decode(response.body);

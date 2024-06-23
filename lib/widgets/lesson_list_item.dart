@@ -171,7 +171,7 @@ class _LessonListItemState extends State<LessonListItem> {
                                       'Lesson Enrolled Successfully'));
                             } else {
                               final url =
-                                  '$AMIN_BASE_URL/api/web_redirect_to_buy_lesson/$_authToken/${widget.lesson!.id}/academybycreativeitem';
+                                  '$BASE_URL/api/web_redirect_to_buy_lesson/$_authToken/${widget.lesson!.id}/academybycreativeitem';
                               _launchURL(url);
                             }
                           } else {
