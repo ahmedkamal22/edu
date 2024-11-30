@@ -112,8 +112,11 @@ class _PlayVideoFromVimeoIdState extends State<PlayVideoFromYoutube> {
       ),
       body: SafeArea(
         child: Center(
-          child: PodVideoPlayer(
-            controller: controller,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: PodVideoPlayer(
+              controller: controller,
+            ),
           ),
         ),
       ),

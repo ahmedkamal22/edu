@@ -32,9 +32,11 @@ class _FilterWidgetState extends State<FilterWidget> {
   var _isInit = true;
   var _isLoading = false;
   var subIndex = 0;
+  var subSubIndex = 0;
   var data = <AllSubCategory>[];
   String _selectedCategory = 'all';
   dynamic _selectedSubCat;
+  dynamic _selectedSubSubCat;
   String _selectedPrice = 'all';
   String _selectedLevel = 'all';
   String _selectedLanguage = 'all';
@@ -112,6 +114,7 @@ class _FilterWidgetState extends State<FilterWidget> {
     setState(() {
       _selectedCategory = 'all';
       _selectedSubCat = null;
+      _selectedSubSubCat = null;
       _selectedPrice = 'all';
       _selectedLevel = 'all';
       _selectedLanguage = 'all';
@@ -138,6 +141,9 @@ class _FilterWidgetState extends State<FilterWidget> {
             _selectedLevel,
             _selectedLanguage,
             _selectedRating);
+        // if (_selectedSubSubCat != null) {
+        //
+        // }
       } else {
         await Provider.of<Courses>(context, listen: false).filterCourses(
             _selectedCategory,
@@ -169,11 +175,12 @@ class _FilterWidgetState extends State<FilterWidget> {
     catData.insert(
         0,
         Category(
-            id: 0,
-            title: 'All Category',
-            thumbnail: null,
-            numberOfCourses: null,
-            numberOfSubCategories: null));
+          id: 0,
+          title: 'All Category',
+          thumbnail: null,
+          numberOfCourses: null,
+          numberOfSubCategories: null,
+        ));
     //print(catData);
     final langData = Provider.of<Languages>(context, listen: false).items;
     langData.insert(
@@ -282,8 +289,8 @@ class _FilterWidgetState extends State<FilterWidget> {
                                   onChanged: (value) {
                                     setState(() {
                                       _selectedSubCat = null;
+                                      _selectedSubSubCat = null;
                                       _selectedCategory = value.toString();
-                                      // print(allCategory.indexOf(value));
                                     });
                                   },
                                   isExpanded: true,
@@ -347,9 +354,67 @@ class _FilterWidgetState extends State<FilterWidget> {
                                     return DropdownMenuItem(
                                       value:
                                           cd.id == 0 ? 'all' : cd.id.toString(),
+                                      onTap: () {
+                                        setState(() {
+                                          subSubIndex = allCategory[subIndex]
+                                              .subCategory
+                                              .indexOf(cd);
+                                        });
+                                      },
                                       child: Text(
                                         cd.title.toString(),
                                         style: const TextStyle(
+                                          color: kSecondaryColor,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              child: CustomText(
+                                text: 'Sub Sub Category',
+                                fontSize: 17,
+                                colors: kTextColor,
+                              ),
+                            ),
+                            Card(
+                              elevation: 0.1,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: DropdownButton(
+                                  value: _selectedSubSubCat,
+                                  icon: const Card(
+                                    elevation: 0.1,
+                                    color: kBackgroundColor,
+                                    child: Icon(
+                                        Icons.keyboard_arrow_down_outlined),
+                                  ),
+                                  underline: const SizedBox(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedSubSubCat = value.toString();
+                                    });
+                                  },
+                                  isExpanded: true,
+                                  hint: const Text('All Sub Sub Categories',
+                                      style: TextStyle(
+                                        color: kSecondaryColor,
+                                        fontSize: 15,
+                                      )),
+                                  items: allCategory[subIndex]
+                                      .subCategory
+                                      .map((cd) {
+                                    return DropdownMenuItem(
+                                      value:
+                                          cd.id == 0 ? 'all' : cd.id.toString(),
+                                      child: const Text(
+                                        "test",
+                                        style: TextStyle(
                                           color: kSecondaryColor,
                                           fontSize: 15,
                                         ),

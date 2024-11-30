@@ -476,11 +476,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 20),
                               child: CustomText(
-                                text: 'Course Curriculum',
+                                text:
+                                    'Course Curriculum - ${loadedCourse.title}',
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
                                 colors: kDarkGreyColor,
@@ -622,6 +623,9 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                                               lesson: section.mLesson![index],
                                               courseId:
                                                   loadedCourseDetail.courseId!,
+                                              isCoursePurchased:
+                                                  loadedCourseDetail
+                                                      .isPurchased!,
                                             );
                                           },
                                           itemCount: section.mLesson!.length,

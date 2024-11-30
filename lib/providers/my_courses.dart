@@ -11,12 +11,17 @@ import 'shared_pref_helper.dart';
 
 class MyCourses with ChangeNotifier {
   List<MyCourse> _items = [];
+  List<Lesson> _lessonItems = [];
   List<Section> _sectionItems = [];
 
   MyCourses(this._items, this._sectionItems);
 
   List<MyCourse> get items {
     return [..._items];
+  }
+
+  List<Lesson> get lessonItems {
+    return [..._lessonItems];
   }
 
   List<Section> get sectionItems {
@@ -73,6 +78,51 @@ class MyCourses with ChangeNotifier {
       // print(catData['name']);
     }
     return loadedCourses;
+  }
+
+  Future<void> fetchMyLessons() async {
+    final authToken = await SharedPreferenceHelper().getAuthToken();
+    var url = '$BASE_URL/api/my_lessons?auth_token=$authToken';
+    try {
+      final response = await http.get(Uri.parse(url));
+      print(response.body);
+      final extractedData = json.decode(response.body) as List;
+      // ignore: unnecessary_null_comparison
+      if (extractedData.isEmpty || extractedData == null) {
+        return;
+      }
+      // print(extractedData);
+      _lessonItems = buildMyLessonList(extractedData);
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  List<Lesson> buildMyLessonList(List extractedData) {
+    final List<Lesson> loadedLessons = [];
+    for (var lessonData in extractedData) {
+      loadedLessons.add(Lesson(
+        id: int.parse(lessonData['id']),
+        courseId: int.parse(lessonData['course_id']),
+        title: lessonData['title'],
+        lessonType: lessonData['lesson_type'],
+        duration: lessonData['duration'],
+        lessonPrice: lessonData['price'],
+        lessonDiscountPrice: lessonData['discounted_price'],
+        attachment: lessonData['attachment'],
+        attachmentType: lessonData['attachment_type'],
+        isFree: lessonData['is_free'],
+        lessonExpiryData: lessonData['expiry_period'],
+        summary: lessonData['summary'],
+        videoUrl: lessonData['video_url'],
+        videoTypeMobile: lessonData['video_type_for_mobile_application'],
+        videoUrlMobile: lessonData['video_url_for_mobile_application'],
+        durationForMobile: lessonData['duration_for_mobile_application'],
+      ));
+      // print(catData['name']);
+    }
+    return loadedLessons;
   }
 
   Future<void> fetchCourseSections(int courseId) async {

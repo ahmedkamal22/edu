@@ -23,7 +23,6 @@ class AllSubCategory {
 class AllSubSubCategories {
   final int? id;
   final String? title;
-  final String? parent;
 
-  AllSubSubCategories({this.id, this.title, this.parent});
+  AllSubSubCategories({this.id, this.title});
 } //new update

@@ -63,7 +63,7 @@ class Categories with ChangeNotifier {
   }
 
   Future<void> fetchSubCategories(int catId) async {
-    var url = '$AMIN_BASE_URL/api/sub_categories/$catId';
+    var url = '$BASE_URL/api/sub_categories/$catId';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as List;
@@ -93,7 +93,7 @@ class Categories with ChangeNotifier {
   }
 
   Future<void> fetchSubSubCategories(int subCatId) async {
-    var url = '$AMIN_BASE_URL/api/sub_sub_categories/$subCatId';
+    var url = '$BASE_URL/api/sub_sub_categories/$subCatId';
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -133,7 +133,7 @@ class Categories with ChangeNotifier {
   }
 
   Future<void> fetchAllCategory() async {
-    var url = '$AMIN_BASE_URL/api/all_categories'; //new update
+    var url = '$BASE_URL/api/all_categories'; //new update
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as List;
@@ -185,7 +185,6 @@ class Categories with ChangeNotifier {
       loadedSubCategories.add(AllSubSubCategories(
         id: int.parse(subSubData['id']),
         title: subSubData['name'],
-        parent: subSubData['parent'],
       ));
     }
     // print(loadedLessons.first.title);
